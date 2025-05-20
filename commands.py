@@ -44,17 +44,14 @@ class ModeCommands:
         
 
 
-        print("Текущая рабочая директория:", os.getcwd())
-        print("Сохраняем модели в:", self.model_dir)
+        # print("Текущая рабочая директория:", os.getcwd())
+        # print("Сохраняем модели в:", self.model_dir)
 
     def _save(self, model, name):
-        print("cheeeck", self.model_dir)
         os.makedirs(self.model_dir, exist_ok=True)
-        print("_save", self.model_dir, name)
         file = os.path.join(self.model_dir, f"{name}.joblib")
         joblib.dump(model, file)
-        print("текущая директория сохранения", os.getcwd())
-        print("yessss", file, model)
+        
 
     def _load(self, name):
         path = os.path.join(self.model_dir, f"{name}.joblib")
@@ -65,7 +62,6 @@ class ModeCommands:
     def _fit(self, X, y, model_type, params, name):
         model = classes[model_type](**params)
         model.fit(X, y)
-        print("_fit")
         self._save(model, name)
         with self.lock:
             self.active_processes.value -= 1
